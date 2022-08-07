@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://entities/dummy/dummy.gd" type="Script" id=1]
+[ext_resource path="res://entities/dummy/dummy.png" type="Texture" id=2]
+[ext_resource path="res://entities/common/HurtBox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://entities/common/hurtbox.gd" type="Script" id=4]
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 8.0
+height = 4.0
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 11.0
+height = 10.0
+
+[sub_resource type="Theme" id=5]
+
+[node name="Dummy" type="StaticBody2D"]
+collision_layer = 16
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -20 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -8 )
+rotation = -1.5708
+shape = SubResource( 3 )
+
+[node name="HurtBox" parent="." groups=["enemy"] instance=ExtResource( 3 )]
+position = Vector2( 0, -15 )
+collision_layer = 32
+collision_mask = 10
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2( 0, -1 )
+shape = SubResource( 4 )
+
+[node name="HitCounter" type="Label" parent="."]
+margin_left = -38.0
+margin_top = -47.0
+margin_right = 38.0
+margin_bottom = -32.0
+theme = SubResource( 5 )
+text = "Hits: 100"
+align = 1
+uppercase = true
+
+[connection signal="hurtbox_hit" from="HurtBox" to="." method="_on_dummy_hit"]
+
+[editable path="HurtBox"]
