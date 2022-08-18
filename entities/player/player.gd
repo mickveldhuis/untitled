@@ -61,10 +61,11 @@ func move_state(delta : float) -> void:
 			if not anim.is_playing():
 				anim.play("spear")
 				timer.start() # timeout attacking ability!
-			if anim.current_animation == "spear":
-				for area in hitbox.get_overlapping_areas():
-					if area.has_method("on_hit"):
-						area.on_hit(self, {})
+
+#			if anim.current_animation == "spear":
+#				for area in hitbox.get_overlapping_areas():
+#					if area.has_method("on_hit"):
+#						area.on_hit(self, {})
 		
 #		if ray_cast.is_colliding() and timer.is_stopped():
 #			print("HIT DUMMY...!!!")
