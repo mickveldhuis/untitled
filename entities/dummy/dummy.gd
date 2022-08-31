@@ -12,14 +12,14 @@ func _ready() -> void:
 	update_counter_text()
 
 
-func take_damage(damage : int) -> void:
+func take_damage(_damage : int) -> void:
 	print("on_dummy_hit")
 	n_hits += 1
 	
 	update_counter_text()
 
 
-func _on_dummy_hit(body, data) -> void:
+func _on_dummy_hit(_body, _data) -> void:
 	print("on_dummy_hit")
 	n_hits += 1
 	

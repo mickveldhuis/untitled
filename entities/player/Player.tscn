@@ -1,17 +1,20 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://entities/player/player.gd" type="Script" id=1]
+[ext_resource path="res://entities/player/player_controller.gd" type="Script" id=1]
 [ext_resource path="res://entities/player/player.png" type="Texture" id=2]
 [ext_resource path="res://entities/player/spear.png" type="Texture" id=3]
 [ext_resource path="res://nodes/hitbox.gd" type="Script" id=4]
+[ext_resource path="res://nodes/state_machine.gd" type="Script" id=5]
+[ext_resource path="res://entities/player/states/idle_state.gd" type="Script" id=6]
+[ext_resource path="res://entities/player/states/run_state.gd" type="Script" id=7]
+[ext_resource path="res://entities/player/states/attack_state.gd" type="Script" id=8]
+[ext_resource path="res://entities/player/states/dash_state.gd" type="Script" id=9]
+[ext_resource path="res://entities/player/states/interact_state.gd" type="Script" id=10]
+[ext_resource path="res://entities/player/states/actionless_state.gd" type="Script" id=11]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 8.0
 height = 4.0
-
-[sub_resource type="CapsuleShape2D" id=4]
-radius = 12.0
-height = 10.0
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -69,6 +72,32 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 12.0
+height = 10.0
+
+[sub_resource type="Gradient" id=6]
+colors = PoolColorArray( 0, 0, 0, 1, 0.533203, 0.533203, 0.533203, 1 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 2
+emission_box_extents = Vector3( 15, 1, 1 )
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 120.0
+flatness = 0.2
+initial_velocity = 200.0
+initial_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 1.0
+scale = 2.0
+scale_random = 0.7
+color_ramp = SubResource( 7 )
+
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 1 )
@@ -88,6 +117,10 @@ texture = ExtResource( 2 )
 position = Vector2( 0, -8 )
 rotation = -1.5708
 shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 2 )
+anims/spear = SubResource( 3 )
 
 [node name="Weapon" type="Node2D" parent="."]
 position = Vector2( 0, -22 )
@@ -109,11 +142,45 @@ rotation = 1.5708
 shape = SubResource( 4 )
 disabled = true
 
-[node name="Timer" type="Timer" parent="."]
+[node name="States" type="Node2D" parent="."]
+script = ExtResource( 5 )
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node2D" parent="States"]
+script = ExtResource( 6 )
+
+[node name="Run" type="Node2D" parent="States"]
+script = ExtResource( 7 )
+
+[node name="Dash" type="Node2D" parent="States"]
+script = ExtResource( 9 )
+
+[node name="DashTimer" type="Timer" parent="States/Dash"]
+wait_time = 0.5
+
+[node name="DashParticles" type="Particles2D" parent="States/Dash"]
+position = Vector2( 0, 1 )
+emitting = false
+amount = 60
+lifetime = 0.12
+one_shot = true
+process_material = SubResource( 5 )
+
+[node name="ActionStates" type="Node2D" parent="."]
+script = ExtResource( 5 )
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node2D" parent="ActionStates"]
+script = ExtResource( 11 )
+
+[node name="Attack" type="Node2D" parent="ActionStates"]
+script = ExtResource( 8 )
+
+[node name="AttackTimer" type="Timer" parent="ActionStates/Attack"]
 wait_time = 0.24
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 2 )
-anims/spear = SubResource( 3 )
+[node name="Interact" type="Node2D" parent="ActionStates"]
+script = ExtResource( 10 )
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="States/Dash/DashTimer" to="States/Dash" method="_on_timer_timeout"]
+[connection signal="timeout" from="ActionStates/Attack/AttackTimer" to="ActionStates/Attack" method="_on_timer_timeout"]
