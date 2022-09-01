@@ -2,13 +2,11 @@ extends PlayerState
 
 
 func enter(_data : Dictionary = {}) -> void:
-	print("[Enter Action] Interact state...")
-
 	player.velocity = Vector2.ZERO
 
 
 func exit() -> void:
-	print("[Exit Action] Interact state...")
+	pass
 
 
 func physics_process(_delta : float) -> void:

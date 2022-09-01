@@ -17,6 +17,7 @@ var velocity : Vector2 = Vector2.ZERO
 onready var fsm : StateMachine = $States
 onready var action_fsm : StateMachine = $ActionStates
 onready var anim : AnimationPlayer = $AnimationPlayer
+onready var weapon : Node2D = $Weapon
 onready var hitbox : Area2D = $Weapon/WeaponSprite/HitBox
 
 

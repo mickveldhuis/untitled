@@ -13,8 +13,6 @@ onready var particles : Particles2D = $DashParticles
 
 
 func enter(_data : Dictionary = {}) -> void:
-	print("[Enter] Dash state...")
-
 	dash_direction = get_input_vector()
 
 	particles.restart()
@@ -24,8 +22,7 @@ func enter(_data : Dictionary = {}) -> void:
 
 
 func exit() -> void:
-	print("[Exit] Dash state...")
-
+	pass
 
 func physics_process(_delta : float) -> void:
 	var dash_speed : float = player.speed * dash_multiplier

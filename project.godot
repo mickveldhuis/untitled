@@ -48,6 +48,12 @@ config/name="untitled"
 run/main_scene="res://scenes/level_1/ThroneRoom.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://autoloads/global.gd"
+LevelData="*res://autoloads/level_data.gd"
+ResourceManager="*res://autoloads/resource_manager.gd"
+
 [importer_defaults]
 
 texture={
@@ -99,6 +105,11 @@ action={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+secondary={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
 interact={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
@@ -119,6 +130,7 @@ dash={
 2d_physics/layer_5="Enemy"
 2d_physics/layer_6="EnemyHurtBox"
 2d_physics/layer_7="EnemyHitbox"
+2d_physics/layer_8="Projectiles"
 
 [physics]
 

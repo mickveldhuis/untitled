@@ -2,16 +2,17 @@ extends PlayerState
 
 
 func enter(_data : Dictionary = {}) -> void:
-	print("[Enter Action] Idle state...")
-
+	pass
 
 func exit() -> void:
-	print("[Exit Action] Idle state...")
+	pass
 
 
 func handle_input() -> void:
 	if player.fsm.state_id != "Dash":
 		if Input.is_action_just_pressed("action"):
-			emit_signal("finished", "Attack")
+			emit_signal("finished", "PrimaryAttack")
+		elif Input.is_action_just_pressed("secondary"):
+			emit_signal("finished", "SecondaryAttack")
 		elif Input.is_action_just_pressed("interact"):
 			emit_signal("finished", "Interact")

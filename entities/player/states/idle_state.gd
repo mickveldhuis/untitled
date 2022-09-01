@@ -2,13 +2,11 @@ extends PlayerState
 
 
 func enter(_data : Dictionary = {}) -> void:
-	print("[Enter] Idle state...")
-
 	player.velocity = Vector2.ZERO
 
 
 func exit() -> void:
-	print("[Exit] Idle state...")
+	pass
 
 
 func handle_input() -> void:

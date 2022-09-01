@@ -2,11 +2,11 @@ extends PlayerState
 
 
 func enter(_data : Dictionary = {}) -> void:
-	print("[Enter] Run state...")
+	pass
 
 
 func exit() -> void:
-	print("[Exit] Run state...")
+	pass
 
 
 func physics_process(_delta : float) -> void:

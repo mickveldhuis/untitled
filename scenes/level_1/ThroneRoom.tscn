@@ -114,6 +114,8 @@ tile_data = PoolIntArray( -2424847, 0, 0, -2424840, 0, 0 )
 [node name="Dummy" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 132, 39 )
 
+[node name="Projectiles" type="YSort" parent="YSort"]
+
 [node name="Canvas" type="CanvasLayer" parent="."]
 
 [node name="DebugInterface" parent="Canvas" instance=ExtResource( 5 )]

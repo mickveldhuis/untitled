@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://entities/player/player_controller.gd" type="Script" id=1]
 [ext_resource path="res://entities/player/player.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://entities/player/states/dash_state.gd" type="Script" id=9]
 [ext_resource path="res://entities/player/states/interact_state.gd" type="Script" id=10]
 [ext_resource path="res://entities/player/states/actionless_state.gd" type="Script" id=11]
+[ext_resource path="res://entities/player/states/secondary_attack_state.gd" type="Script" id=12]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 8.0
@@ -45,6 +46,35 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "spear"
+length = 0.2
+step = 0.02
+tracks/0/type = "value"
+tracks/0/path = NodePath("Weapon/WeaponSprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.12, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 20, 0 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Weapon/WeaponSprite/HitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.14 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "spear_throw"
 length = 0.2
 step = 0.02
 tracks/0/type = "value"
@@ -121,6 +151,7 @@ shape = SubResource( 1 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 2 )
 anims/spear = SubResource( 3 )
+anims/spear_throw = SubResource( 8 )
 
 [node name="Weapon" type="Node2D" parent="."]
 position = Vector2( 0, -22 )
@@ -173,14 +204,27 @@ initial_state = NodePath("Idle")
 [node name="Idle" type="Node2D" parent="ActionStates"]
 script = ExtResource( 11 )
 
-[node name="Attack" type="Node2D" parent="ActionStates"]
+[node name="PrimaryAttack" type="Node2D" parent="ActionStates"]
 script = ExtResource( 8 )
 
-[node name="AttackTimer" type="Timer" parent="ActionStates/Attack"]
+[node name="AttackTimer" type="Timer" parent="ActionStates/PrimaryAttack"]
 wait_time = 0.24
+
+[node name="SecondaryAttack" type="Node2D" parent="ActionStates"]
+scale = Vector2( 1, 1.00732 )
+script = ExtResource( 12 )
+projectile_speed = 700.0
+cooldown = 0.3
+
+[node name="SpawnPosition" type="Position2D" parent="ActionStates/SecondaryAttack"]
+position = Vector2( 0, -21.8402 )
+
+[node name="CooldownTimer" type="Timer" parent="ActionStates/SecondaryAttack"]
+wait_time = 0.5
+one_shot = true
 
 [node name="Interact" type="Node2D" parent="ActionStates"]
 script = ExtResource( 10 )
 
 [connection signal="timeout" from="States/Dash/DashTimer" to="States/Dash" method="_on_timer_timeout"]
-[connection signal="timeout" from="ActionStates/Attack/AttackTimer" to="ActionStates/Attack" method="_on_timer_timeout"]
+[connection signal="timeout" from="ActionStates/PrimaryAttack/AttackTimer" to="ActionStates/PrimaryAttack" method="_on_timer_timeout"]
