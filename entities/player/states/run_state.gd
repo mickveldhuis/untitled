@@ -2,7 +2,7 @@ extends PlayerState
 
 
 func enter(_data : Dictionary = {}) -> void:
-	pass
+	player.anim_fsm.travel("Run")
 
 
 func exit() -> void:
@@ -10,6 +10,8 @@ func exit() -> void:
 
 
 func physics_process(_delta : float) -> void:
+	player.anim_tree.set("parameters/Run/blend_position", -player.get_mouse_vector())
+
 	var input_vector : Vector2  = get_input_vector()
 	player.velocity = input_vector * player.speed
 	

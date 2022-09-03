@@ -14,8 +14,10 @@ onready var timer : Timer = $CooldownTimer
 
 func enter(_data : Dictionary = {}) -> void:
 	var spear : KinematicBody2D = ResourceManager.projectiles["spear"].instance()
-	var vel : Vector2 = projectile_speed * Vector2.RIGHT
-	spear.init(spawn.global_position, vel, 200)
+
+	var vel : Vector2 = projectile_speed * Vector2.RIGHT.rotated(deg2rad(player.aim))
+	spear.init(spawn.global_position, vel, player.aim, 200)
+	
 	var _err : int = spear.connect("destroyed", self, "_on_destroyed")
 
 	var level = get_tree().current_scene

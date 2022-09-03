@@ -20,11 +20,15 @@ func enter(_data : Dictionary = {}) -> void:
 	timer.wait_time = dash_duration
 	timer.start()
 
+	player.anim_fsm.travel("Idle") # TODO: proper dash animation..!!
+
 
 func exit() -> void:
 	pass
 
 func physics_process(_delta : float) -> void:
+	player.anim_tree.set("parameters/Idle/blend_position", -player.get_mouse_vector())
+
 	var dash_speed : float = player.speed * dash_multiplier
 	player.velocity = dash_direction * dash_speed
 	
