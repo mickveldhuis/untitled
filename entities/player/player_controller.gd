@@ -29,6 +29,7 @@ onready var anim_fsm : AnimationNodeStateMachinePlayback = anim_tree.get("parame
 onready var weapon : Node2D = $Weapon
 onready var hitbox : Area2D = $Weapon/WeaponSprite/HitBox
 onready var com : Position2D = $COM
+onready var camera : Camera2D = $Camera
 
 
 func _ready() -> void:
@@ -56,6 +57,7 @@ func _physics_process(delta):
 	update_aim()
 	weapon.rotation_degrees = aim
 
+	# print(get_mouse_vector().normalized())
 
 # func update_anim() -> void:
 # 	var anim_prefix : String = "idle"
@@ -99,6 +101,15 @@ func get_mouse_vector() -> Vector2:
 	var mouse : Vector2 = com.get_local_mouse_position()
 
 	return mouse
+
+
+func update_blend_position(state : String = "Idle", _input : Vector2 = Vector2.ZERO) -> void:
+	var parameter : String = "parameters/{state}/blend_position".format({"state": state})
+	
+	var mouse : Vector2 = com.get_local_mouse_position()
+	
+	if mouse.length() > mouse_deadzone:
+		anim_tree.set(parameter, mouse)
 
 
 func move() -> void:

@@ -22,4 +22,4 @@ func handle_input() -> void:
 
 
 func physics_process(_delta : float) -> void:
-	player.anim_tree.set("parameters/Idle/blend_position", -player.get_mouse_vector())
+	player.update_blend_position("Idle")

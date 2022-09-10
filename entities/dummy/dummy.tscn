@@ -1,25 +1,31 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://entities/dummy/dummy.gd" type="Script" id=1]
-[ext_resource path="res://entities/dummy/dummy.png" type="Texture" id=2]
+[ext_resource path="res://entities/dummy/dummy_cat.png" type="Texture" id=2]
 [ext_resource path="res://nodes/hurtbox.gd" type="Script" id=3]
+[ext_resource path="res://entities/dummy/HealthBar.tscn" type="PackedScene" id=4]
+[ext_resource path="res://entities/common/white.gdshader" type="Shader" id=5]
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 5 )
+shader_param/is_white = false
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 8.0
 height = 4.0
 
 [sub_resource type="CapsuleShape2D" id=6]
-radius = 12.0
-height = 10.0
-
-[sub_resource type="Theme" id=5]
+radius = 14.0
+height = 22.0
 
 [node name="Dummy" type="StaticBody2D"]
 collision_layer = 16
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -20 )
+material = SubResource( 7 )
+position = Vector2( 0, -19 )
+scale = Vector2( 1, 1.00588 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -33,15 +39,14 @@ collision_mask = 8
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2( 0, -16 )
+position = Vector2( 2, -25 )
 shape = SubResource( 6 )
 
-[node name="HitCounter" type="Label" parent="."]
-margin_left = -38.0
-margin_top = -47.0
-margin_right = 38.0
-margin_bottom = -32.0
-theme = SubResource( 5 )
-text = "Hits: 100"
-align = 1
-uppercase = true
+[node name="HealthBar" parent="." instance=ExtResource( 4 )]
+margin_left = -25.0
+margin_top = -59.0
+margin_right = 25.0
+margin_bottom = -54.0
+
+[node name="FlashTimer" type="Timer" parent="."]
+wait_time = 0.08

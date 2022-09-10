@@ -13,7 +13,7 @@ onready var timer : Timer = $CooldownTimer
 
 
 func enter(_data : Dictionary = {}) -> void:
-	var spear : KinematicBody2D = ResourceManager.projectiles["spear"].instance()
+	var spear : Node2D = ResourceManager.projectiles["spear"].instance()
 
 	var vel : Vector2 = projectile_speed * Vector2.RIGHT.rotated(deg2rad(player.aim))
 	spear.init(spawn.global_position, vel, player.aim, 200)

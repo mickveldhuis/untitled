@@ -10,7 +10,7 @@ func exit() -> void:
 
 
 func physics_process(_delta : float) -> void:
-	player.anim_tree.set("parameters/Run/blend_position", -player.get_mouse_vector())
+	player.update_blend_position("Run")
 
 	var input_vector : Vector2  = get_input_vector()
 	player.velocity = input_vector * player.speed

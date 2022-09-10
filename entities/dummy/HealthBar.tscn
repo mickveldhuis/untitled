@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://entities/dummy/healthbar_progress.png" type="Texture" id=1]
+[ext_resource path="res://entities/dummy/healthbar_background.png" type="Texture" id=2]
+[ext_resource path="res://entities/dummy/health_bar.gd" type="Script" id=3]
+
+[node name="HealthBar" type="Control"]
+margin_right = 50.0
+margin_bottom = 5.0
+script = ExtResource( 3 )
+
+[node name="BottomIndicator" type="TextureProgress" parent="."]
+margin_right = 50.0
+margin_bottom = 5.0
+value = 100.0
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 1 )
+tint_progress = Color( 0.929412, 0.8, 0.8, 1 )
+
+[node name="TopIndicator" type="TextureProgress" parent="."]
+margin_right = 50.0
+margin_bottom = 5.0
+value = 100.0
+texture_progress = ExtResource( 1 )
+tint_progress = Color( 0.772549, 0.192157, 0.192157, 1 )
+
+[node name="Tween" type="Tween" parent="."]

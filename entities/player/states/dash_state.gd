@@ -2,7 +2,7 @@ extends PlayerState
 
 
 export (float) var dash_duration = 0.1
-export (float) var dash_multiplier = 3.0
+export (float) var dash_multiplier = 5.0
 
 
 var dash_direction : Vector2 = Vector2.ZERO
@@ -27,7 +27,7 @@ func exit() -> void:
 	pass
 
 func physics_process(_delta : float) -> void:
-	player.anim_tree.set("parameters/Idle/blend_position", -player.get_mouse_vector())
+	player.update_blend_position("Idle")
 
 	var dash_speed : float = player.speed * dash_multiplier
 	player.velocity = dash_direction * dash_speed

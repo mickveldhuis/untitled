@@ -1,11 +1,10 @@
+class_name Projectile
 extends Node2D
 
 
 signal destroyed
 
 
-# var impuls : float
-# var direction : Vector2
 var velocity : Vector2 = Vector2.ZERO
 var distance : float = 100.0
 
@@ -32,7 +31,3 @@ func destroy() -> void:
 	queue_free()
 
 	emit_signal("destroyed")
-
-
-func _on_screen_exited() -> void:
-	destroy()
